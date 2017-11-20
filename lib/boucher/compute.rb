@@ -47,7 +47,7 @@ module Boucher
 
   def self.update_recipes(server)
     puts "Updating recipes on #{server.id}"
-    ssh server, "cd infrastructure && git checkout . && git clean -d -f && git pull && bundle"
+    ssh server, "cd infrastructure && git checkout . && sudo git clean -d -f && git pull && bundle"
   end
 
   def self.cook_meal(server, meal_name)
