@@ -55,13 +55,13 @@ module Boucher
   # and on git clean above?
   def self.cook_meal(server, meal_name)
     update_recipes(server)
-    ssh server, "cd infrastructure && sudo BENV=#{Boucher::Config[:env]} BRANCH=#{Boucher::Config[:branch]} chef-solo -c config/solo.rb -j config/#{meal_name}.json"
+    ssh server, "cd infrastructure && sudo BENV=#{Boucher::Config[:env]} BRANCH=#{Boucher::Config[:branch]} bundle exec chef-solo -c config/solo.rb -j config/#{meal_name}.json"
   end
 
   def self.cook_recipe(server, recipe)
     update_recipes(server)
     ssh server, "echo '{\\\"run_list\\\": [\\\"recipe[#{recipe}]\\\"]}' > /tmp/single_recipe.json"
-    ssh server, "cd infrastructure && sudo BENV=#{Boucher::Config[:env]} BRANCH=#{Boucher::Config[:branch]} chef-solo -c config/solo.rb -j /tmp/single_recipe.json"
+    ssh server, "cd infrastructure && sudo BENV=#{Boucher::Config[:env]} BRANCH=#{Boucher::Config[:branch]} bundle exec chef-solo -c config/solo.rb -j /tmp/single_recipe.json"
   end
 
   def self.ssh_open?(server)
