@@ -45,23 +45,21 @@ module Boucher
     "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i #{Boucher::Config[:aws_key_filename]}.pem"
   end
 
+  # TODO: Remove sudo from git clean
   def self.update_recipes(server)
     puts "Updating recipes on #{server.id}"
     ssh server, "cd infrastructure && git checkout . && sudo git clean -d -f && git pull && bundle"
   end
 
-  # TODO: librarian-chef needs sudo else it moans about stuff being
-  # in the cookbooks dir. Move to berkshelf and remove sudo here
-  # and on git clean above?
   def self.cook_meal(server, meal_name)
     update_recipes(server)
-    ssh server, "cd infrastructure && sudo BENV=#{Boucher::Config[:env]} BRANCH=#{Boucher::Config[:branch]} chef-solo -c config/solo.rb -j config/#{meal_name}.json"
+    ssh server, "cd infrastructure && BENV=#{Boucher::Config[:env]} BRANCH=#{Boucher::Config[:branch]} bundle exec chef-solo -c config/solo.rb -j config/#{meal_name}.json"
   end
 
   def self.cook_recipe(server, recipe)
     update_recipes(server)
     ssh server, "echo '{\\\"run_list\\\": [\\\"recipe[#{recipe}]\\\"]}' > /tmp/single_recipe.json"
-    ssh server, "cd infrastructure && sudo BENV=#{Boucher::Config[:env]} BRANCH=#{Boucher::Config[:branch]} chef-solo -c config/solo.rb -j /tmp/single_recipe.json"
+    ssh server, "cd infrastructure && BENV=#{Boucher::Config[:env]} BRANCH=#{Boucher::Config[:branch]} bundle exec chef-solo -c config/solo.rb -j /tmp/single_recipe.json"
   end
 
   def self.ssh_open?(server)
