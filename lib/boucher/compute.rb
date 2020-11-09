@@ -28,7 +28,7 @@ module Boucher
       command_arg = "\"#{command}\""
     end
 
-    command = "#{ssh_command} #{Boucher::Config[:username]}@#{server.dns_name} #{command_arg}"
+    command = "#{ssh_command} #{Boucher::Config[:username]}@#{server.dns_name || server.private_dns_name} #{command_arg}"
     verbose command
     Kernel.system command
     raise "command failed with code #{$?.exitstatus}" unless $?.success?
