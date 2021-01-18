@@ -6,8 +6,7 @@ module Boucher
 
   S3_CONFIG = {
           :provider => 'AWS',
-          :aws_secret_access_key => Boucher::Config[:aws_secret_access_key],
-          :aws_access_key_id => Boucher::Config[:aws_access_key_id]
+          :use_iam_profile => true
   }
 
   def self.storage

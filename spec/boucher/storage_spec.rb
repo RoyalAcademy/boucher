@@ -7,8 +7,6 @@ describe "Boucher Storage" do
   it "knows connections options" do
     connection = Boucher.storage
     connection.should_not == nil
-    Boucher::S3_CONFIG[:aws_secret_access_key].should == Boucher::Config[:aws_secret_access_key]
-    Boucher::S3_CONFIG[:aws_access_key_id].should == Boucher::Config[:aws_access_key_id]
   end
 
   context "with dir" do

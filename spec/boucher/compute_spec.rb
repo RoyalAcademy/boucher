@@ -11,8 +11,6 @@ describe "Boucher Cloud" do
   it "knows connections options" do
     connection = Boucher.compute
     connection.should_not == nil
-    Boucher::EC2_CONFIG[:aws_secret_access_key].should == "secret key"
-    Boucher::EC2_CONFIG[:aws_access_key_id].should == "public id"
   end
 
   it "ssh's a command" do

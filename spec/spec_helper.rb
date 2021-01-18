@@ -2,8 +2,6 @@
 module Boucher
   NO_LOAD_CONFIG = true
   Config = {
-          :aws_secret_access_key => "secret key",
-          :aws_access_key_id => "public id",
           :aws_key_filename => "test_key"
   }
 end

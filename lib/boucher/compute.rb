@@ -8,9 +8,8 @@ module Boucher
 
   EC2_CONFIG = {
           :provider => 'AWS',
-          :aws_secret_access_key => Boucher::Config[:aws_secret_access_key],
-          :aws_access_key_id => Boucher::Config[:aws_access_key_id],
-          :region => Boucher::Config[:aws_region]
+          :region => Boucher::Config[:aws_region],
+          :use_iam_profile => true
   }
 
   def self.compute
